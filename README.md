@@ -105,3 +105,14 @@ Prometheus: http://localhost:9090.
 API: http://api.localhost.
 
 Nginx: http://nginx.localhost.
+1. ¿Cómo detecta Traefik los servicios configurados en Docker Compose?
+
+Traefik detecta los servicios configurados en Docker Compose mediante
+su provider de Docker. Al habilitar la opción --providers.docker=true en la
+configuración de Traefik, Traefik consulta la API de Docker para descubrir
+automáticamente los servicios que se están ejecutando, sus contenedores y
+las etiquetas (labels) asociadas a cada servicio.
+Las etiquetas en los servicios de Docker se utilizan para configurar
+reglas de enrutamiento, middlewares y otros parámetros dentro de Traefik. 
+Por ejemplo, las etiquetas como traefik.http.routers.servicio.rule definen las 
+reglas de enrutamiento para un servicio.
