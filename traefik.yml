@@ -1,10 +1,9 @@
-global:
-  checkNewVersion: true
-  sendAnonymousUsage: false
 
 entryPoints:
   web:
     address: ":80"
+  websecure:
+    address: ":443"
 
 api:
   insecure: true
@@ -20,45 +19,65 @@ providers:
   docker:
     exposedByDefault: false
 
-# Redireccionar tráfico hacia HTTPS (opcional si usas TLS)
-# entryPoints:
-#   web-secure:
-#     address: ":443"
-#   web:
-#     address: ":80"
-#     http:
-#       redirections:
-#         entryPoint:
-#           to: web-secure
-#           scheme: https
-#           permanent: true
+certificatesResolvers:
+  myresolver:
+    acme:
+      email: "tu-email@dominio.com"
+      storage: "/etc/traefik/acme.json"
+      httpChallenge:
+        entryPoint: web
 
-# Configuración para tus servicios
 http:
   routers:
-    # Router para un servicio de ejemplo
-    my-service:
-      rule: "Host(`example.com`)"
+    # Router para nginx
+    nginx-router:
+      rule: "Host(`nginx.localhost`)"
       entryPoints:
         - "web"
-      service: "my-service"
+      service: "nginx-service"
       middlewares:
-        - "example-middleware"
-      tls: # Solo si quieres habilitar HTTPS
-        certResolver: "myresolver" # Aquí definirías tu resolución de certificados
+        - "nginx-ratelimit"
+      tls: # Si decides usar TLS
+        certResolver: "myresolver" # Si tienes un certificado Let's Encrypt configurado, por ejemplo.
+
+    # Router para la API
+    api-router:
+      rule: "Host(`api.localhost`) && PathPrefix(`/api`)"
+      entryPoints:
+        - "web"
+      service: "api-service"
+      middlewares:
+        - "auth"
+      tls: # Si decides usar TLS
+        certResolver: "myresolver"
 
   services:
-    my-service:
+    nginx-service:
       loadBalancer:
         servers:
-          - url: "http://my-container:8080"
+          - url: "http://nginx:80"
+
+    api-service:
+      loadBalancer:
+        servers:
+          - url: "http://api:80"
 
   middlewares:
-    # Middleware para redireccionar tráfico a HTTPS (si decides usar TLS)
-    example-middleware:
-      redirectScheme:
-        scheme: https
-        permanent: true
+    # Middleware para limitación de tasa en nginx
+    nginx-ratelimit:
+      rateLimit:
+        average: 2
+        burst: 1
+        sourceCriterion:
+          ipStrategy:
+            depth: 1
+
+    # Middleware para autenticación básica
+    auth:
+      basicAuth:
+        users:
+          - "test:$$apr1$$H6uskkkW$$IgXLP6ewTrSuBkTrqE8wj/"
+          - "test2:$$apr1$$d9hr9HBB$$4HxwgUir3HP4EsggP/QNo0"
 
 # Configuración del panel de control de Traefik
 api:
@@ -67,4 +86,3 @@ api:
   # Si necesitas habilitar un puerto separado para el dashboard
   # entryPoints:
   #   - "web"
-

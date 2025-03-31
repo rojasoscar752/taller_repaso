@@ -1,10 +1,12 @@
-# 🚀 Proyecto: API con Express.js y Servidor Estático con Nginx
+
+#Integrantes dek grupo: Oscar Rojas, Jhonatan Baron
+#  Proyecto: API con Express.js y Servidor Estático con Nginx
 
 Este proyecto configura una API en **Express.js** y un servidor estático en **Nginx**, utilizando **Docker Compose** y **Traefik** como proxy inverso.
 
 ---
 
-## 📂 Estructura del Proyecto
+## Estructura del Proyecto
 ```
 /mi-proyecto
 │── /api
@@ -21,26 +23,24 @@ Este proyecto configura una API en **Express.js** y un servidor estático en **N
 
 ---
 
-## 📦 Instalación y Uso
+## Instalación y Uso
 
-### 1️⃣ Clonar el Repositorio
+### Clonar el Repositorio
 ```sh
-git clone git@github.com:tu-usuario/mi-proyecto.git
-cd mi-proyecto
-```
 
-### 2️⃣ Construir y Levantar los Servicios
+
+Construir y Levantar los Servicios
 ```sh
 docker-compose up -d --build
 ```
 
-### 3️⃣ Probar los Servicios
-- 🌍 **Nginx (Servidor estático):** [http://nginx.localhost](http://nginx.localhost)
-- 📡 **API Express.js:** [http://api.localhost](http://api.localhost)
+###  Probar los Servicios
+-  **Nginx (Servidor estático):** [http://nginx.localhost](http://nginx.localhost)
+- **API Express.js:** [http://api.localhost](http://api.localhost)
 
 ---
 
-## ⚙️ Tecnologías Utilizadas
+##  Tecnologías Utilizadas
 - **Node.js + Express.js** → API REST
 - **Nginx** → Servidor de archivos estáticos
 - **Docker Compose** → Orquestación de contenedores
@@ -48,7 +48,7 @@ docker-compose up -d --build
 
 ---
 
-## 🔧 Configuración de Docker
+## Configuración de Docker
 ### `docker-compose.yml`
 Define los servicios de **Traefik, Nginx y API Express.js**.
 
@@ -63,7 +63,7 @@ Define las reglas del servidor web.
 
 ---
 
-## 🔑 Configuración de SSH con GitHub
+##  Configuración de SSH con GitHub
 Si usas SSH para GitHub, asegúrate de:
 1. Tener una clave SSH generada: `ssh-keygen -t rsa -b 4096`
 2. Agregarla a GitHub: [GitHub → SSH keys](https://github.com/settings/keys)
@@ -75,7 +75,7 @@ Si usas SSH para GitHub, asegúrate de:
 
 ---
 
-## 🛠️ Comandos Útiles
+##  Comandos Útiles
 ### Parar los contenedores
 ```sh
 docker-compose down
@@ -91,7 +91,7 @@ docker-compose up -d --build
 
 ---
 
-## 📌 Notas
+## Notas
 - **Traefik** maneja el enrutamiento de los servicios.
 - **Nginx** se encarga de servir archivos estáticos.
 - **Express.js** maneja las peticiones API.
