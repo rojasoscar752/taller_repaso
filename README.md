@@ -98,3 +98,10 @@ docker-compose up -d --build
 
 ✍️ **Autor:** _Oscar Rojas, Jhonatan Baron_
 # taller_repaso
+Grafana: http://localhost:3000 con credenciales admin/admin.
+
+Prometheus: http://localhost:9090.
+
+API: http://api.localhost.
+
+Nginx: http://nginx.localhost.
